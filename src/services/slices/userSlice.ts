@@ -37,17 +37,10 @@ export const checkUserAuth = createAsyncThunk(
   }
 );
 
-export const fetchUser = createAsyncThunk(
-  'user/fetchUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      const user = await getUserApi();
-      return user;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
-  }
-);
+export const fetchUser = createAsyncThunk('user/fetchUser', async (_) => {
+  const user = await getUserApi();
+  return user;
+});
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
@@ -59,35 +52,13 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (
-    loginUser: { email: string; password: string },
-    { rejectWithValue }
-  ) => {
-    try {
-      const result = await loginUserApi(loginUser as unknown as TLoginData);
-      setCookie('accessToken', result.accessToken);
-      localStorage.setItem('refreshToken', result.refreshToken);
-      return result.user;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
+  async (loginUser: { email: string; password: string }) => {
+    const result = await loginUserApi(loginUser as unknown as TLoginData);
+    setCookie('accessToken', result.accessToken);
+    localStorage.setItem('refreshToken', result.refreshToken);
+    return result.user;
   }
 );
-
-// logoutUser
-
-// export const logoutUser = createAsyncThunk(
-//   'user/logoutUser',
-//   async (logoutUser, { rejectWithValue }) => {
-//     try {
-//       await logoutApi();
-//       deleteCookie('accessToken');
-//       localStorage.removeItem('refreshToken');
-//     } catch (error) {
-//       return rejectWithValue('failed fetch');
-//     }
-//   }
-// );
 
 export const logoutUser = createAsyncThunk(
   'user/logoutUser',
@@ -100,13 +71,9 @@ export const logoutUser = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   'user/resetPassword',
-  async (data: { password: string; token: string }, { rejectWithValue }) => {
-    try {
-      const resault = await resetPasswordApi(data);
-      return resault;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
+  async (data: { password: string; token: string }) => {
+    const resault = await resetPasswordApi(data);
+    return resault;
   }
 );
 

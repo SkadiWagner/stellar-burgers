@@ -7,7 +7,8 @@ import {
   ResetPassword,
   Profile,
   ProfileOrders,
-  NotFound404
+  NotFound404,
+  OrderInfoPage
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
@@ -24,6 +25,7 @@ import { AppHeader, Modal, IngredientDetails, OrderInfo } from '@components';
 import { RequireAuth } from '../requared-auth/requared-auth';
 import { checkUserAuth, getUser } from '@slices';
 import { useEffect } from 'react';
+import { title } from 'process';
 
 const App = () => {
   const location = useLocation();
@@ -100,8 +102,21 @@ const App = () => {
             </RequireAuth>
           }
         />
-        <Route path='/feed/:number' element={<OrderInfo />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path='/feed/:number' element={<OrderInfoPage />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <>
+              <h2
+                className={'text text_type_main-large'}
+                style={{ textAlign: 'center', marginTop: '100px' }}
+              >
+                Ингредиент подробно
+              </h2>
+              <IngredientDetails />
+            </>
+          }
+        />
         <Route
           path='/profile/orders/:number'
           element={

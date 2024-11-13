@@ -10,51 +10,32 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const setOrder = createAsyncThunk(
   'orders/setOrders',
-  async (orderIngredients: string[], { rejectWithValue }) => {
-    try {
-      const result = await orderBurgerApi(orderIngredients);
-      return result.order;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
+  async (orderIngredients: string[]) => {
+    const result = await orderBurgerApi(orderIngredients);
+    return result.order;
   }
 );
 
 export const getUsersOrders = createAsyncThunk(
   'orders/getUsersOrders',
-  async (_, { rejectWithValue }) => {
-    try {
-      const result = await getOrdersApi();
-      return result;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
+  async (_) => {
+    const result = await getOrdersApi();
+    return result;
   }
 );
 
 export const getCurrentOrder = createAsyncThunk(
   'orders/getCurrentOrder',
-  async (orderNum: number, { rejectWithValue }) => {
-    try {
-      const result = await getOrderByNumberApi(orderNum);
-      return result;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
+  async (orderNum: number) => {
+    const result = await getOrderByNumberApi(orderNum);
+    return result;
   }
 );
 
-export const getFeed = createAsyncThunk(
-  'orders/getFeed',
-  async (_, { rejectWithValue }) => {
-    try {
-      const result = await getFeedsApi();
-      return result;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
-  }
-);
+export const getFeed = createAsyncThunk('orders/getFeed', async (_) => {
+  const result = await getFeedsApi();
+  return result;
+});
 
 export interface OrdersState {
   status: 'success' | 'failed' | 'loading' | 'idle';
@@ -69,6 +50,7 @@ export interface OrdersState {
   feed?: TOrder[];
   orderModalData?: TOrder | null;
   currentOrder?: TOrder | null;
+  ingredients: string[];
 }
 
 const initialState: OrdersState = {
@@ -83,7 +65,8 @@ const initialState: OrdersState = {
   totalToday: 0,
   selectedOrder: null,
   currentOrder: null,
-  orderModalData: null
+  orderModalData: null,
+  ingredients: []
 };
 
 const OrdersSlice = createSlice({
@@ -100,7 +83,8 @@ const OrdersSlice = createSlice({
     selectTotalToday: (state) => state.totalToday,
     selectCurrenOrder: (state) => state.currentOrder,
     selectStatus: (state) => state.status,
-    selectOrderModalData: (state) => state.orderModalData
+    selectOrderModalData: (state) => state.orderModalData,
+    selectIngredients: (state) => state.ingredients
   },
   initialState: initialState,
   extraReducers: (builder) => {
@@ -126,6 +110,7 @@ const OrdersSlice = createSlice({
         state.status = 'success';
         state.error = null;
         state.currentOrder = action.payload.orders[0];
+        state.ingredients = action.payload.orders[0].ingredients;
       })
       .addCase(getCurrentOrder.rejected, (state, action) => {
         state.status = 'failed';
@@ -172,7 +157,8 @@ export const {
   selectTotalToday,
   selectCurrenOrder,
   selectStatus,
-  selectOrderModalData
+  selectOrderModalData,
+  selectIngredients : selectOrderIngredients
 } = OrdersSlice.selectors;
 
 export const { setOrderModalData } = OrdersSlice.actions;

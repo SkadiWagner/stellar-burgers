@@ -4,7 +4,13 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector, RootState } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { selectIngredients, selectCurrenOrder, getCurrentOrder } from '@slices';
+import {
+  selectIngredients,
+  selectCurrenOrder,
+  getCurrentOrder,
+  selectOrderIngredients,
+  fetchIngredients
+} from '@slices';
 
 export const OrderInfo: React.FC = () => {
   const { number } = useParams();
@@ -13,6 +19,7 @@ export const OrderInfo: React.FC = () => {
   useEffect(() => {
     if (number) {
       dispatch(getCurrentOrder(Number(number)));
+      dispatch(fetchIngredients());
     }
   }, [dispatch, number]);
 

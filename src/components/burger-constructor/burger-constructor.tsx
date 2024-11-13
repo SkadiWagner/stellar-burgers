@@ -31,7 +31,7 @@ export const BurgerConstructor: FC = () => {
 
   const orderModalData = useSelector(selectOrderModalData) || null;
 
-  const onOrderClick = () => {
+  const onOrderClick = async () => {
     if (!constructorItems.bun || orderRequest) return;
     if (!user) {
       navigate('/login');
@@ -41,13 +41,15 @@ export const BurgerConstructor: FC = () => {
         ...constructorItems.ingredients.map((a) => a._id),
         constructorItems.bun._id!
       ];
-      dispatch(setOrder(ids));
+      const result = await dispatch(setOrder(ids));
+      if (result.meta.requestStatus === 'fulfilled') {
+        dispatch(cleanConstructorItems());
+      }
     }
   };
 
   const closeOrderModal = () => {
     dispatch(setOrderModalData(null));
-    dispatch(cleanConstructorItems());
   };
 
   const ingredientsPrice: number = constructorItems.ingredients.reduce<number>(

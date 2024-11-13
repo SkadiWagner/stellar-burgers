@@ -6,13 +6,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchIngredients = createAsyncThunk(
   'ingredietns/fetchIngredients',
-  async (_, { rejectWithValue }) => {
-    try {
-      const ingredients = await getIngredientsApi();
-      return ingredients;
-    } catch (error) {
-      return rejectWithValue('failed fetch');
-    }
+  async (_) => {
+    const ingredients = await getIngredientsApi();
+    return ingredients;
   }
 );
 

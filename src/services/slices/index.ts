@@ -20,7 +20,8 @@ export {
   selectStatus,
   selectTotal,
   selectTotalToday,
-  setOrderModalData
+  setOrderModalData,
+  selectOrderIngredients
 } from './orderSlice';
 
 export {

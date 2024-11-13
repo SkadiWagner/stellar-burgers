@@ -1,7 +1,7 @@
 import { getAuthChecked, getUser } from '@slices';
 import { Preloader } from '@ui';
 import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store';
 import { Navigate, useLocation } from 'react-router-dom';
 
 type RequireAuthProps = {
