@@ -15,8 +15,8 @@ export const Login: FC = () => {
     e.preventDefault();
     const logInData = { email, password };
     try {
-      await dispatch(loginUser(logInData)).unwrap();
-      await dispatch(setUser(logInData));
+      const user = await dispatch(loginUser(logInData)).unwrap();
+      await dispatch(setUser(user));
       const from = location.state.from.pathname || '/';
       navigate(from);
       return;

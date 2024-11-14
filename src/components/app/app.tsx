@@ -111,7 +111,7 @@ const App = () => {
                 className={'text text_type_main-large'}
                 style={{ textAlign: 'center', marginTop: '100px' }}
               >
-                Ингредиент подробно
+                Детали ингредиента
               </h2>
               <IngredientDetails />
             </>
@@ -133,7 +133,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title={'Ингредиент подробно'} onClose={closeModal}>
+              <Modal title={'Детали ингредиента'} onClose={closeModal}>
                 <IngredientDetails />
               </Modal>
             }

@@ -6,8 +6,8 @@ export const OrderInfoPage = () => {
   return (
     <>
       <h2
-        className={'text text_type_main-large'}
-        style={{ textAlign: 'center', marginTop: '100px' }}
+        className={'text text_type_main-large detailPageWrap'}
+        style={{ textAlign: 'center' }}
       >
         #{number}
       </h2>

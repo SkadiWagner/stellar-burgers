@@ -37,9 +37,10 @@ const constructorSlice = createSlice({
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(
-          (item) => item._id === action.payload
+          (item) => item.id === action.payload
         );
     },
+
     changeIngredient(state, action: PayloadAction<TIngredient>) {
       if (action.payload.type === 'bun') {
         state.constructorItems.bun = {
