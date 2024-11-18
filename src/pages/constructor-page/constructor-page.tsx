@@ -5,11 +5,22 @@ import styles from './constructor-page.module.css';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useDispatch } from '../../services/store';
+import {
+  IngredientsState,
+  selectIngredients
+} from 'src/services/slices/ingredientSlice';
+import { TIngredient } from '@utils-types';
+import { fetchIngredients } from '@slices';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const dispatch = useDispatch();
+  const ingredients = useSelector<IngredientsState>(
+    (state) => state.ingredients
+  );
+
+  const isIngredientsLoading = ingredients.status === 'loading';
 
   return (
     <>
