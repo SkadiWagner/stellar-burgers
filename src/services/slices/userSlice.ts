@@ -92,14 +92,14 @@ export interface userState {
   isAuth: boolean;
 }
 
-const initialState: userState = {
+export const initialState: userState = {
   user: null,
   error: null,
   status: 'idle',
   isAuth: false
 };
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   reducers: {
     setAuthChecked: (state, action: PayloadAction<boolean>) => {
@@ -133,12 +133,12 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
 
       .addCase(registerUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
       .addCase(registerUser.pending, (state, action) => {
         state.status = 'loading';
@@ -150,7 +150,7 @@ const userSlice = createSlice({
 
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
       .addCase(loginUser.pending, (state, action) => {
         state.status = 'loading';
@@ -166,7 +166,7 @@ const userSlice = createSlice({
       })
       .addCase(changeUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
 
       .addCase(resetPassword.fulfilled, (state) => {
@@ -174,7 +174,7 @@ const userSlice = createSlice({
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
 
       .addCase(logoutUser.fulfilled, (state) => {
@@ -183,7 +183,7 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       });
   }
 });

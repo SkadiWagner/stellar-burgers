@@ -19,7 +19,7 @@ export interface IngredientsState {
   status: 'success' | 'failed' | 'loading' | 'idle';
 }
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   selectedIngredientId: null,
   ingredients: [],
   status: 'idle',
@@ -54,7 +54,7 @@ const IngredientsSlice = createSlice({
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       });
   }
 });

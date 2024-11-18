@@ -10,7 +10,7 @@ export interface BurgerConstructorState {
   orderModalData: TOrder | null;
 }
 
-const initialState: BurgerConstructorState = {
+export const initialState: BurgerConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
@@ -18,7 +18,7 @@ const initialState: BurgerConstructorState = {
   orderModalData: null
 };
 
-const constructorSlice = createSlice({
+export const constructorSlice = createSlice({
   name: 'constructorSlice',
   reducers: {
     addIngredient: {

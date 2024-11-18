@@ -12,26 +12,23 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { useDispatch, useSelector } from '../../services/store';
+import { useDispatch } from '../../services/store';
 import {
   Routes,
   Route,
   useLocation,
   useNavigate,
-  useMatch,
-  BrowserRouter
+  useMatch
 } from 'react-router-dom';
 import { AppHeader, Modal, IngredientDetails, OrderInfo } from '@components';
 import { RequireAuth } from '../requared-auth/requared-auth';
-import { checkUserAuth, getUser } from '@slices';
+import { checkUserAuth } from '@slices';
 import { useEffect } from 'react';
-import { title } from 'process';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(getUser);
 
   const matchFeed = useMatch('/feed/:number');
   const matchProfileOrders = useMatch('/profile/orders/:number');

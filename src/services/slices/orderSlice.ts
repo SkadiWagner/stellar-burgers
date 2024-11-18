@@ -53,7 +53,7 @@ export interface OrdersState {
   ingredients: string[];
 }
 
-const initialState: OrdersState = {
+export const initialState: OrdersState = {
   status: 'idle',
   error: null,
   orders: [],
@@ -69,7 +69,7 @@ const initialState: OrdersState = {
   ingredients: []
 };
 
-const OrdersSlice = createSlice({
+export const OrdersSlice = createSlice({
   name: 'orders',
   reducers: {
     setOrderModalData: (state, action: PayloadAction<TOrder | null>) => {
@@ -102,7 +102,7 @@ const OrdersSlice = createSlice({
       })
       .addCase(setOrder.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
         state.orderRequest = false;
       })
 
@@ -114,7 +114,7 @@ const OrdersSlice = createSlice({
       })
       .addCase(getCurrentOrder.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
 
       .addCase(getUsersOrders.pending, (state) => {
@@ -128,7 +128,7 @@ const OrdersSlice = createSlice({
       })
       .addCase(getUsersOrders.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       })
 
       .addCase(getFeed.pending, (state) => {
@@ -144,7 +144,7 @@ const OrdersSlice = createSlice({
       })
       .addCase(getFeed.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message as string;
       });
   }
 });
@@ -158,7 +158,7 @@ export const {
   selectCurrenOrder,
   selectStatus,
   selectOrderModalData,
-  selectIngredients : selectOrderIngredients
+  selectIngredients: selectOrderIngredients
 } = OrdersSlice.selectors;
 
 export const { setOrderModalData } = OrdersSlice.actions;
